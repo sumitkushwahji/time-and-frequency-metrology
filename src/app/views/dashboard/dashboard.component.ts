@@ -1,5 +1,14 @@
 import { DOCUMENT, NgStyle } from '@angular/common';
-import { Component, DestroyRef, effect, inject, OnInit, Renderer2, signal, WritableSignal } from '@angular/core';
+import {
+  Component,
+  DestroyRef,
+  effect,
+  inject,
+  OnInit,
+  Renderer2,
+  signal,
+  WritableSignal,
+} from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { ChartOptions } from 'chart.js';
 import {
@@ -17,7 +26,7 @@ import {
   ProgressComponent,
   RowComponent,
   TableDirective,
-  TextColorDirective
+  TextColorDirective,
 } from '@coreui/angular';
 import { ChartjsComponent } from '@coreui/angular-chartjs';
 import { IconDirective } from '@coreui/icons-angular';
@@ -44,10 +53,31 @@ interface IUser {
   templateUrl: 'dashboard.component.html',
   styleUrls: ['dashboard.component.scss'],
   standalone: true,
-  imports: [WidgetsDropdownComponent, TextColorDirective, CardComponent, CardBodyComponent, RowComponent, ColComponent, ButtonDirective, IconDirective, ReactiveFormsModule, ButtonGroupComponent, FormCheckLabelDirective, ChartjsComponent, NgStyle, CardFooterComponent, GutterDirective, ProgressBarDirective, ProgressComponent, WidgetsBrandComponent, CardHeaderComponent, TableDirective, AvatarComponent]
+  imports: [
+    WidgetsDropdownComponent,
+    TextColorDirective,
+    CardComponent,
+    CardBodyComponent,
+    RowComponent,
+    ColComponent,
+    ButtonDirective,
+    IconDirective,
+    ReactiveFormsModule,
+    ButtonGroupComponent,
+    FormCheckLabelDirective,
+    ChartjsComponent,
+    NgStyle,
+    CardFooterComponent,
+    GutterDirective,
+    ProgressBarDirective,
+    ProgressComponent,
+    WidgetsBrandComponent,
+    CardHeaderComponent,
+    TableDirective,
+    AvatarComponent,
+  ],
 })
 export class DashboardComponent implements OnInit {
-
   readonly #destroyRef: DestroyRef = inject(DestroyRef);
   readonly #document: Document = inject(DOCUMENT);
   readonly #renderer: Renderer2 = inject(Renderer2);
@@ -65,7 +95,7 @@ export class DashboardComponent implements OnInit {
       activity: '10 sec ago',
       avatar: './assets/images/avatars/1.jpg',
       status: 'success',
-      color: 'success'
+      color: 'success',
     },
     {
       name: 'Avram Tarasios',
@@ -78,7 +108,7 @@ export class DashboardComponent implements OnInit {
       activity: '5 minutes ago',
       avatar: './assets/images/avatars/2.jpg',
       status: 'danger',
-      color: 'info'
+      color: 'info',
     },
     {
       name: 'Quintin Ed',
@@ -91,7 +121,7 @@ export class DashboardComponent implements OnInit {
       activity: '1 hour ago',
       avatar: './assets/images/avatars/3.jpg',
       status: 'warning',
-      color: 'warning'
+      color: 'warning',
     },
     {
       name: 'Enéas Kwadwo',
@@ -104,7 +134,7 @@ export class DashboardComponent implements OnInit {
       activity: 'Last month',
       avatar: './assets/images/avatars/4.jpg',
       status: 'secondary',
-      color: 'danger'
+      color: 'danger',
     },
     {
       name: 'Agapetus Tadeáš',
@@ -117,7 +147,7 @@ export class DashboardComponent implements OnInit {
       activity: 'Last week',
       avatar: './assets/images/avatars/5.jpg',
       status: 'success',
-      color: 'primary'
+      color: 'primary',
     },
     {
       name: 'Friderik Dávid',
@@ -130,8 +160,8 @@ export class DashboardComponent implements OnInit {
       activity: 'Yesterday',
       avatar: './assets/images/avatars/6.jpg',
       status: 'info',
-      color: 'dark'
-    }
+      color: 'dark',
+    },
   ];
 
   public mainChart: IChartProps = { type: 'line' };
@@ -143,7 +173,7 @@ export class DashboardComponent implements OnInit {
   });
   public chart: Array<IChartProps> = [];
   public trafficRadioGroup = new FormGroup({
-    trafficRadio: new FormControl('Month')
+    trafficRadio: new FormControl('Month'),
   });
 
   ngOnInit(): void {
@@ -168,9 +198,13 @@ export class DashboardComponent implements OnInit {
   }
 
   updateChartOnColorModeChange() {
-    const unListen = this.#renderer.listen(this.#document.documentElement, 'ColorSchemeChange', () => {
-      this.setChartStyles();
-    });
+    const unListen = this.#renderer.listen(
+      this.#document.documentElement,
+      'ColorSchemeChange',
+      () => {
+        this.setChartStyles();
+      }
+    );
 
     this.#destroyRef.onDestroy(() => {
       unListen();
