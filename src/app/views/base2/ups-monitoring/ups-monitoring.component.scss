@@ -1,4 +1,60 @@
-.powerone{
-    height: 400px;
+.card-img-top_857{
+    height: 450px;
     width:100%;
 }
+
+.card-img-top_856{
+    height: 450px;
+    width:100%;
+}
+
+.container {
+    position: relative;
+    width: 100%;  /* or any specific width */
+    height: 100%; /* or any specific height */
+    /* Other styles */
+}
+
+.left-corner {
+    text-align: left;
+    margin-right: 100px;
+}
+
+.btn {
+    display: inline-block;
+    padding: 0.5rem 1rem;
+    margin-top: 10px;
+    font-size: 1rem;
+    font-weight: 400;
+    line-height: 1.5;
+    text-align: center;
+    text-decoration: none;
+    white-space: nowrap;
+    vertical-align: middle;
+    cursor: pointer;
+    border: 1px solid transparent;
+    border-radius: 0.25rem;
+    color: black;
+    background-color: black;
+    border-color:black;
+}
+
+.btn:hover {
+    background-color: #0056b3;
+    border-color: #004085;
+}
+
+.footer-content {
+    max-width: 300px;
+    margin: 0;
+  }
+  
+  .footer h3,
+  .footer p {
+    margin: 0;
+  }
+  
+  .footer a {
+    color: #007bff;
+    text-decoration: none;
+  }
