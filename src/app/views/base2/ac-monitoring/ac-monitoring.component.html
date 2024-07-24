@@ -1,10 +1,39 @@
-<button cButton color="primary">Primary</button>
-<button cButton color="secondary">Secondary</button>
-<button cButton color="success">Success</button>
-<button cButton color="danger">Danger</button>
-<button cButton color="warning">Warning</button>
-<button cButton color="info">Info</button>
-<button cButton color="light">Light</button>
-<button cButton color="dark">Dark</button>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AC Details and Service Contacts</title>
 
-<button cButton color="link">Link</button>
+</head>
+<body>
+  <div class="container">
+    <h1>LAB 34 ( AC Monitoring )</h1>
+    
+    <form id="acForm">
+      <h2>AC Details</h2>
+      <label for="brand">Brand:</label>
+      <input type="text" id="brand" name="brand" required>
+
+      <label for="model">Model:</label>
+      <input type="text" id="model" name="model" required>
+
+      <label for="capacity">Capacity (Tons):</label>
+      <input type="number" id="capacity" name="capacity" step="0.1" required>
+
+      <h2>Service Contacts</h2>
+      <label for="serviceName">Service Name:</label>
+      <input type="text" id="serviceName" name="serviceName" required>
+
+      <label for="contactNumber">Contact Number:</label>
+      <input type="tel" id="contactNumber" name="contactNumber" required>
+
+      <button type="submit">Save Details</button>
+    </form>
+
+    <div id="output"></div>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>

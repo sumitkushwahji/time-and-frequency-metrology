@@ -22,6 +22,16 @@ export const routes: Routes = [
           title: 'ac-monitoring',
         },
       },
+      {
+        path: 'ups-monitoring',
+        loadComponent: () =>
+          import('./ups-monitoring/ups-monitoring.component').then(
+            (m) => m.UpsMonitoringComponent
+          ),
+        data: {
+          title: 'ups-monitoring',
+        },
+      },
     ],
   },
 ];

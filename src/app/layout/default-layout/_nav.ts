@@ -40,6 +40,11 @@ export const navItems: INavData[] = [
         url: '/base2/ac-monitoring',
         icon: 'nav-icon-bullet',
       },
+      {
+        name: 'UPS-Component',
+        url: '/base2/ups-monitoring',
+        icon: 'nav-icon-bullet',
+      },
     ],
   },
 

@@ -1,0 +1,61 @@
+import { NgTemplateOutlet } from '@angular/common';
+import { Component } from '@angular/core';
+import { RouterLink } from '@angular/router';
+import {
+  RowComponent,
+  ColComponent,
+  TextColorDirective,
+  CardComponent,
+  CardHeaderComponent,
+  CardBodyComponent,
+  CardTitleDirective,
+  CardTextDirective,
+  ButtonDirective,
+  CardSubtitleDirective,
+  CardLinkDirective,
+  ListGroupDirective,
+  ListGroupItemDirective,
+  CardFooterComponent,
+  NavComponent,
+  NavItemComponent,
+  NavLinkDirective,
+  BorderDirective,
+  CardGroupComponent,
+  GutterDirective,
+  CardImgDirective,
+} from '@coreui/angular';
+import { DocsExampleComponent } from '@docs-components/public-api';
+
+@Component({
+  selector: 'app-ups-monitoring',
+  standalone: true,
+  imports: [
+    RowComponent,
+    ColComponent,
+    TextColorDirective,
+    CardComponent,
+    CardHeaderComponent,
+    CardBodyComponent,
+    DocsExampleComponent,
+    NgTemplateOutlet,
+    CardTitleDirective,
+    CardTextDirective,
+    ButtonDirective,
+    CardSubtitleDirective,
+    CardLinkDirective,
+    RouterLink,
+    ListGroupDirective,
+    ListGroupItemDirective,
+    CardFooterComponent,
+    NavComponent,
+    NavItemComponent,
+    NavLinkDirective,
+    BorderDirective,
+    CardGroupComponent,
+    GutterDirective,
+    CardImgDirective,
+  ],
+  templateUrl: './ups-monitoring.component.html',
+  styleUrl: './ups-monitoring.component.scss',
+})
+export class UpsMonitoringComponent {}
