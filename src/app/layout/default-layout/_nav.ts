@@ -45,11 +45,7 @@ export const navItems: INavData[] = [
         url: '/base2/ups-monitoring',
         icon: 'nav-icon-bullet',
       },
-      {
-        name: 'real-graph',
-        url: '/base2/real-graph',
-        icon: 'nav-icon-bullet',
-      },
+
       {
         name: 'Highlighted-Chart',
         url: '/base2/graph',

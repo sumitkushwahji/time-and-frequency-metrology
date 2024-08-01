@@ -35,23 +35,12 @@ export const routes: Routes = [
       {
         path: 'graph',
         loadComponent: () =>
-          import('./graph/graph.component').then(
-            (m) => m.GraphComponent
-          ),
+          import('./graph/graph.component').then((m) => m.GraphComponent),
         data: {
           title: 'graph',
         },
       },
-      {
-        path: 'real-graph',
-        loadComponent: () =>
-          import('./real-graph/real-graph.component').then(
-            (m) => m.RealGraphComponent
-          ),
-        data: {
-          title: 'graph',
-        },
-      },
+
       {
         path: 'missing-value-graph',
         loadComponent: () =>
@@ -72,7 +61,6 @@ export const routes: Routes = [
           title: 'rabbit',
         },
       },
-      
     ],
   },
 ];
