@@ -32,6 +32,47 @@ export const routes: Routes = [
           title: 'ups-monitoring',
         },
       },
+      {
+        path: 'graph',
+        loadComponent: () =>
+          import('./graph/graph.component').then(
+            (m) => m.GraphComponent
+          ),
+        data: {
+          title: 'graph',
+        },
+      },
+      {
+        path: 'real-graph',
+        loadComponent: () =>
+          import('./real-graph/real-graph.component').then(
+            (m) => m.RealGraphComponent
+          ),
+        data: {
+          title: 'graph',
+        },
+      },
+      {
+        path: 'missing-value-graph',
+        loadComponent: () =>
+          import('./missing-value-graph/missing-value-graph.component').then(
+            (m) => m.MissingValueGraphComponent
+          ),
+        data: {
+          title: 'missing-value-graph',
+        },
+      },
+      {
+        path: 'white-rabbit',
+        loadComponent: () =>
+          import('./white-rabbit/white-rabbit.component').then(
+            (m) => m.WhiteRabbitComponent
+          ),
+        data: {
+          title: 'rabbit',
+        },
+      },
+      
     ],
   },
 ];
