@@ -61,6 +61,11 @@ export const navItems: INavData[] = [
         url: '/base2/white-rabbit',
         icon: 'nav-icon-bullet',
       },
+      {
+        name: 'CCTV-Monitoring',
+        url: '/base2/cctv-monitoring',
+        icon: 'nav-icon-bullet',
+      },
     ],
   },
 

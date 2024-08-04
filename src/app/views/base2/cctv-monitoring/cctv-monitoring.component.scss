@@ -1,0 +1,14 @@
+/* lab-monitoring.component.css */
+.monitoring-container {
+    display: flex;
+    justify-content: space-between; /* Space items evenly */
+    gap: 20px; /* Space between columns */
+  }
+  
+  .monitoring-item {
+    flex: 1; /* Allows items to stretch and fill the space equally */
+    text-align: center; /* Centers text in each item */
+    border: 1px solid #ddd; /* Optional: Add border for clarity */
+    padding: 10px; /* Optional: Add padding for aesthetics */
+  }
+  

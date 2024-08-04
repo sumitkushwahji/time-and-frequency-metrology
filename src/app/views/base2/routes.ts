@@ -61,6 +61,16 @@ export const routes: Routes = [
           title: 'rabbit',
         },
       },
+      {
+        path: 'cctv-monitoring',
+        loadComponent: () =>
+          import('./cctv-monitoring/cctv-monitoring.component').then(
+            (m) => m.CctvMonitoringComponent
+          ),
+        data: {
+          title: 'CCTV',
+        },
+      },
     ],
   },
 ];
