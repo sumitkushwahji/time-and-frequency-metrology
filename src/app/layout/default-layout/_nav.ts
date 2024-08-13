@@ -31,6 +31,39 @@ export const navItems: INavData[] = [
   },
 
   {
+    name: 'APMP',
+    url: '/apmp',
+    iconComponent: { name: 'cil-puzzle' },
+    children: [
+      {
+        name: 'APMP Dashboard',
+        url: '/apmp/dashboard',
+        icon: 'nav-icon-bullet',
+      },
+      {
+        name: 'Real Time TIC Data',
+        url: '/apmp/tic-data',
+        icon: 'nav-icon-bullet',
+      },
+      {
+        name: 'Frequency Offset',
+        url: '/apmp/frequency-offset',
+        icon: 'nav-icon-bullet',
+      },
+      {
+        name: 'Phase Correction',
+        url: '/apmp/phase-correction',
+        icon: 'nav-icon-bullet',
+      },
+      {
+        name: 'Rubidium Steering',
+        url: '/apmp/rubidium-steering',
+        icon: 'nav-icon-bullet',
+      },
+    ],
+  },
+
+  {
     name: 'Base2',
     url: '/base2',
     iconComponent: { name: 'cil-puzzle' },
@@ -64,6 +97,11 @@ export const navItems: INavData[] = [
       {
         name: 'CCTV-Monitoring',
         url: '/base2/cctv-monitoring',
+        icon: 'nav-icon-bullet',
+      },
+      {
+        name: 'Template',
+        url: '/base2/template',
         icon: 'nav-icon-bullet',
       },
     ],

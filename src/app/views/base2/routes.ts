@@ -71,6 +71,16 @@ export const routes: Routes = [
           title: 'CCTV',
         },
       },
+      {
+        path: 'template',
+        loadComponent: () =>
+          import('./template/template.component').then(
+            (m) => m.TemplateComponent
+          ),
+        data: {
+          title: 'Template',
+        },
+      },
     ],
   },
 ];

@@ -34,6 +34,10 @@ export const routes: Routes = [
           import('./views/base2/routes').then((m) => m.routes),
       },
       {
+        path: 'apmp',
+        loadChildren: () => import('./views/apmp/routes').then((m) => m.routes),
+      },
+      {
         path: 'buttons',
         loadChildren: () =>
           import('./views/buttons/routes').then((m) => m.routes),

@@ -1,15 +1,12 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { RouterModule } from '@angular/router'; // Add RouterModule import
-import { HttpClientModule, HttpClient } from '@angular/common/http'; // Import HttpClientModule
+import { RouterModule } from '@angular/router';
+import { HttpClientModule } from '@angular/common/http';
 
 import { ChartjsModule } from '@coreui/angular-chartjs';
-// app.module.ts
-import { BrowserModule } from '@angular/platform-browser';
-import { AppComponent } from './app.component';
-// import { RealGraphComponent } from './RealGraphComponent/RealGraphComponent';
 
+// Importing CoreUI modules
 import {
   AccordionModule,
   AlertModule,
@@ -47,8 +44,8 @@ import { IconModule } from '@coreui/icons-angular';
     CommonModule,
     FormsModule,
     ReactiveFormsModule,
-    RouterModule, // Add RouterModule here
-    HttpClientModule, // Add HttpClientModule here
+    RouterModule,
+    HttpClientModule,
     ButtonModule,
     ButtonGroupModule,
     GridModule,
@@ -78,16 +75,13 @@ import { IconModule } from '@coreui/icons-angular';
     ToastModule,
     ChartjsModule,
     AlertModule,
-    BrowserModule,
   ],
-  providers: [HttpClientModule],
-  bootstrap: [AppComponent],
   exports: [
     CommonModule,
     FormsModule,
     ReactiveFormsModule,
-    RouterModule, // Add RouterModule here
-    HttpClientModule, // Add HttpClientModule here
+    RouterModule,
+    HttpClientModule,
     ButtonModule,
     ButtonGroupModule,
     GridModule,
@@ -118,14 +112,12 @@ import { IconModule } from '@coreui/icons-angular';
     ChartjsModule,
     AlertModule,
   ],
-//   declarations: [
-//     AppComponent,
-//     // RealGraphComponent
-//   ],
+  declarations: [
+    // Declare your components here, e.g.,
+    // AppComponent,
+    // RealGraphComponent
+  ],
 })
 export class NplModule {}
 
-// @NgModule({
-// })
-// export class AppModule { }
-
+// Your root AppModule should import `NplModule` and should have `BrowserModule` imported.
