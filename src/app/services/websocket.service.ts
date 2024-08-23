@@ -1,49 +1,69 @@
 import { Injectable } from '@angular/core';
-import { Client, Message } from '@stomp/stompjs';
-import SockJS from 'sockjs-client'; // Default import
-import { Subject } from 'rxjs';
+import { Observable, Observer, Subject } from 'rxjs';
+import { map } from 'rxjs/operators';
+
+const CHAT_URL = 'ws://172.16.18.190:8080/ws';
+
+export interface Message {
+  source: string;
+  content: string;
+}
 
 @Injectable({
   providedIn: 'root',
 })
 export class WebsocketService {
-  private stompClient: Client | undefined;
-  private ticDataSubject = new Subject<{ timestamp: string; value: number }>();
+  private subject: Subject<MessageEvent> | undefined;
+  public messages: Subject<Message>;
 
   constructor() {
-    this.initializeWebSocketConnection();
+    this.messages = new Subject<Message>();
+    this.connect(CHAT_URL);
   }
 
-  private initializeWebSocketConnection() {
-    const ws = new SockJS('http://localhost:8080/ws');
-    this.stompClient = new Client({
-      brokerURL: 'ws://localhost:8080/ws',
-      connectHeaders: {},
-      debug: (str) => console.log(str),
-      onConnect: () => {
-        this.stompClient?.subscribe('/topic/tic-data', (message: Message) => {
-          const [timestamp, valueStr] = message.body.split(' ').slice(0, 2);
-          const value = parseFloat(valueStr);
-          this.ticDataSubject.next({ timestamp, value });
-        });
-      },
-      onStompError: (frame) => {
-        console.error('Broker reported error: ' + frame.headers['message']);
-        console.error('Additional details: ' + frame.body);
-      },
-      // More options can be set here as needed
-    });
+  private connect(url: string): void {
+    if (!this.subject) {
+      this.subject = this.create(url);
+      console.log('Successfully connected to:', url);
 
-    this.stompClient.activate();
-  }
-
-  public getTicData() {
-    return this.ticDataSubject.asObservable();
-  }
-
-  public disconnect() {
-    if (this.stompClient) {
-      this.stompClient.deactivate();
+      // Handle incoming messages
+      this.subject.subscribe(
+        (message: MessageEvent) => {
+          console.log('Received data:', message.data);
+          let data = JSON.parse(message.data);
+          this.messages.next(data);
+        },
+        (error) => console.error('WebSocket error:', error),
+        () => console.log('WebSocket connection closed')
+      );
     }
+  }
+
+  private create(url: string): Subject<MessageEvent> {
+    const ws = new WebSocket(url);
+    const observable = new Observable<MessageEvent>(
+      (obs: Observer<MessageEvent>) => {
+        ws.onmessage = obs.next.bind(obs);
+        ws.onerror = obs.error.bind(obs);
+        ws.onclose = obs.complete.bind(obs);
+        return () => ws.close();
+      }
+    );
+    const observer = {
+      next: (data: any) => {
+        console.log('Message sent to WebSocket:', data);
+        if (ws.readyState === WebSocket.OPEN) {
+          ws.send(JSON.stringify(data));
+        }
+      },
+      error: (err: any) => console.error('WebSocket error:', err),
+      complete: () => console.log('WebSocket connection closed'),
+    };
+    return new Subject<MessageEvent>().asObservable().pipe(
+      map((event: MessageEvent) => {
+        observer.next(event.data);
+        return event;
+      })
+    ) as Subject<MessageEvent>;
   }
 }

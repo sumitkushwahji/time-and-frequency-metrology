@@ -104,6 +104,11 @@ export const navItems: INavData[] = [
         url: '/base2/template',
         icon: 'nav-icon-bullet',
       },
+      {
+        name: 'CLOCK',
+        url: '/base2/clock',
+        icon: 'nav-icon-bullet',
+      },
     ],
   },
 

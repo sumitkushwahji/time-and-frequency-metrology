@@ -1,11 +1,8 @@
-<c-col xs="12" lg="6">
-    <c-card class="mb-4">
-      <c-card-header>
-        Line Chart
-      </c-card-header>
-      <c-card-body>
-        <c-chart type="line" [data]="chartLineData" [options]="options"></c-chart>
-      </c-card-body>
-    </c-card>
-  </c-col>
-  
+<div class="container">
+  <h2>WebSocket Messages</h2>
+  <ul>
+    <li *ngFor="let message of messages">
+      <strong>{{ message.source }}:</strong> {{ message.content }}
+    </li>
+  </ul>
+</div>

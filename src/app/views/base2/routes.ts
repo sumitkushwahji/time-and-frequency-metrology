@@ -81,6 +81,26 @@ export const routes: Routes = [
           title: 'Template',
         },
       },
+      {
+        path: 'clock',
+        loadComponent: () =>
+          import('./main-clock/main-clock.component').then(
+            (m) => m.MainClockComponent
+          ),
+        data: {
+          title: 'Clock',
+        },
+      },
+      {
+        path: 'sync-clock',
+        loadComponent: () =>
+          import('./sync-clocks/sync-clocks.component').then(
+            (m) => m.SyncClocksComponent
+          ),
+        data: {
+          title: 'Sync-Clock',
+        },
+      },
     ],
   },
 ];

@@ -1,0 +1,151 @@
+<div class="container">
+
+    <div class="row">
+
+
+        <div class="container-fluid container-md">
+            <div class="row">
+                <div class="col-sm-2 col-xl-2">
+                    <img src="assets/images/logoleft.png" class="img-fluid " alt="nplindia" />
+                </div>
+
+                <div class="col-sm-8 col-xl-8 ist-heading hindi" *ngIf="hindi">
+                    <div class="text-center">
+                        <div class=" navbar-text mb-0 h1 mx-auto npl-logo">
+                            सी एस आई आर - राष्ट्रीय भौतिक प्रयोगशाला
+                        </div>
+                        <div class=" navbar-text mb-0 h2 mx-auto text-primary">
+                            राष्ट्रीय मापिकी संस्थान, भारत
+                        </div>
+                    </div>
+                </div>
+
+
+                <div class="col-sm-8 col-xl-8 ist-heading english" *ngIf="!hindi">
+                    <div class="text-center">
+                        <div class=" navbar-text mb-0 h1 mx-auto npl-logo">
+                            CSIR-National Physical Laboratory
+                        </div>
+                        <div class=" navbar-text mb-0 h3 mx-auto text-primary">
+                            "National Measurement Institute of India"
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-sm-2 col-xl-2">
+                    <img src="assets/images/logo-right.png" class="img-fluid " alt="nplindia" />
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+    
+    <div class="row" style="
+    margin: 1rem 0;
+">
+
+
+
+        <div class="col-sm-4" style="height: 25rem;">
+            <div class="today-clock">
+
+            </div>
+        </div>
+
+        <div class="col-sm-8">
+            <div class="ist-heading hindi row justify-content-md-center font-weight-bold" *ngIf="hindi">
+                <h1>भारतीय मानक समय (आई.एस.टी.)</h1>
+                <h4>(सी एस आई आर - राष्ट्रीय भौतिक प्रयोगशाला द्वारा अनुरक्षित)</h4>
+
+                <h6>(कोऑर्डिनेटेड यूनिवर्सल टाइम (यूटीसी) + 05:30)</h6>
+            </div>
+            <div class="ist-heading english row justify-content-md-center font-weight-bold" *ngIf="!hindi">
+                <h1>Indian Standard Time (I.S.T)</h1>
+                <h4>(Maintainted by CSIR- National Physical Laboratory)</h4>
+                <h6>Coordinated Universal Time (UTC) + 05:30</h6>
+            </div>
+            <div class="row" *ngIf="clock.ntp">
+                <h1 style="font-size:150px;margin:auto;">
+                    {{clock.ntp | date: "HH:mm:ss":'IST'}}
+                </h1>
+                <h3 style="margin:auto;" *ngIf="!hindi">
+                    {{clock.ntp | date: "fullDate"}}/{{hindiMonth[clock.indCal[1] - 1]}} {{clock.indCal[2]}},
+                    {{clock.indCal[0]}}
+                </h3>
+                <h3 style="margin:auto;" *ngIf="hindi">
+                    {{din[clock.ntp.getDay()]}}, {{mahina[clock.ntp.getMonth()]}} {{clock.ntp | date: "d,
+                    Y"}}/{{maas[clock.indCal[1] - 1]}} {{clock.indCal[2]}}, {{clock.indCal[0]}}
+                </h3>
+            </div>
+            
+        </div>
+
+    </div>
+    <div class="row">
+        <div class="col-sm-2" *ngIf="clock.local">
+            <div class="ist-heading hindi" *ngIf="hindi">
+                <h4 style="font-size: 18;margin:1px;">यूटीसी (एनपीएलआई)</h4>
+            </div>
+            <div class="ist-heading english" *ngIf="!hindi">
+                <h4 style="font-size: 18;margin:1px;">UTC (NPLI)</h4>
+            </div>
+            <h2 class="date_time timer" style="font-size:35;">{{clock.ntp | date: "HH:mm:ss":"UTC"}}</h2>
+        </div>
+        <div class="col-sm-2" *ngIf="clock.local">
+            <div class="ist-heading hindi" *ngIf="hindi">
+                <h4 style="font-size: 21px;margin:1px;">टाइम जोन क्लॉक</h4>
+            </div>
+            <div class="ist-heading english" *ngIf="!hindi">
+                <h4 style="font-size: 21px;margin:1px;">Time Zone Clock</h4>
+            </div>
+
+            <h2 class="date_time timer" style="font-size:35;">{{clock.ntp | date: "HH:mm:ss"}}</h2>
+        </div>
+        <div class="col-sm-2" *ngIf="clock.local">
+            <div class="ist-heading hindi" *ngIf="hindi">
+                <h4 style="font-size: 18;margin:1px;">डिवाइस क्लॉक</h4>
+            </div>
+            <div class="ist-heading english" *ngIf="!hindi">
+                <h4 style="font-size: 18;margin:1px;">Device Clock</h4>
+            </div>
+
+            <h2 class="date_time timer" style="font-size:35;">{{clock.local | date: "HH:mm:ss"}}</h2>
+        </div>
+        <div class="col-sm-2">
+            <div class="ist-heading hindi" *ngIf="hindi">
+                <h4 style="font-size: 23px;margin:1px;">एन पी एल आई के साथ सिंक करने के लिए यहां क्लिक करे</h4>
+            </div>
+            <div class="ist-heading english" *ngIf="!hindi">
+                <h4 style="font-size: 23px;margin:1px;">Sync with NPLI</h4>
+            </div>
+
+            <!-- <a href="https://www.nplindia.in/clockcode/html/how_to_sync.php"> -->
+                <!-- <a href="../sync-clocks"> -->
+                    <a href="./assets/sync.html">
+                <h2 style="color:#c47529;">Click Here</h2>
+                <!-- <button style="color:#c47529;" (click)="onClick()">Click Here</button> -->
+            </a>
+        </div>
+        <div class="col-sm-4" id="clock_diff">
+
+            <div class="ist-heading hindi" *ngIf="hindi">
+                <h4 style="font-size: 18;margin:1px;">समयांतर</h4>
+            </div>
+            <div class="ist-heading english" *ngIf="!hindi">
+                <h4 style="font-size: 18;margin:1px;">Time Difference</h4>
+            </div>
+            <h2 id="diff_amt" style="font-size: 25px;display: inline;"></h2>
+            <i class="fas fa-sync" style="display: inline;padding: 0.5rem;"></i>
+        </div>
+
+    </div>
+    <!-- <div class="row">
+        <h3>CSIR- NPL: Time Service</h3>
+
+        <div class="col-sm-12">
+            <app-ntp-stat></app-ntp-stat>
+        </div>
+    </div> -->
+    
+</div>
