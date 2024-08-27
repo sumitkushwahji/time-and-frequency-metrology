@@ -1,1 +1,29 @@
-<h1>Freuency offset data</h1>
+<form cForm>
+  <div class="mb-3">
+    <label cLabel for="ipAddress">TIC Source address</label>
+    <input type="text" id="ipAddress" [(ngModel)]="ipAddress" (ngModelChange)="onIPChange($event)" name="ipAddress"
+      class="form-control" placeholder="Enter IP Address" required />
+  </div>
+</form>
+
+<!-- <c-col>
+    <c-card class="mb-4">
+      <c-card-header>
+        TIC Real-time Data
+      </c-card-header>
+      <c-card-body>
+        <c-chart type="line" [data]="chartBarData" [options]="barChartOptions"></c-chart>
+      </c-card-body>
+    </c-card>
+  </c-col> -->
+
+<c-col>
+  <c-card class="mb-4">
+    <c-card-header>
+      TIC Data Slope
+    </c-card-header>
+    <c-card-body>
+      <c-chart type="line" [data]="slopeData" [options]="barChartOptions"></c-chart>
+    </c-card-body>
+  </c-card>
+</c-col>

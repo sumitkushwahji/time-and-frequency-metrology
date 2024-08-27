@@ -1,8 +1,26 @@
-<div class="container">
-  <h2>WebSocket Messages</h2>
-  <ul>
-    <li *ngFor="let message of messages">
-      <strong>{{ message.source }}:</strong> {{ message.content }}
-    </li>
-  </ul>
-</div>
+<form cForm>
+  <div class="mb-3">
+    <label cLabel for="exampleFormControlInput1">TIC Source address</label>
+    <input
+    type="text"
+    id="ipAddress"
+    [(ngModel)]="ipAddress"
+    (ngModelChange)="onIPChange($event)"
+    name="ipAddress"
+    class="form-control"
+    placeholder="Enter IP Address"
+    required
+  />
+  </div>
+</form>
+
+<c-col>
+  <c-card class="mb-4">
+    <c-card-header>
+      TIC Real-time-data
+    </c-card-header>
+    <c-card-body>
+      <c-chart type="line" [data]="chartBarData" [options]="barChartOptions"></c-chart>
+    </c-card-body>
+  </c-card>
+</c-col>
