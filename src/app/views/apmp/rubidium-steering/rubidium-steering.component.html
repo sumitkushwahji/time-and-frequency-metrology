@@ -1,1 +1,45 @@
-<p>rubidium-steering works!</p>
+<div class="card">
+  <div class="card-header">
+    <h5 class="card-title">Control Panel</h5>
+  </div>
+  <div class="card-body">
+    <!-- First Row: Two Input Fields and Start/Stop Buttons -->
+    <div class="row mb-3">
+      <div class="col">
+        <input type="text" class="form-control" placeholder="Slope multiplier
+" [(ngModel)]="input1" />
+      </div>
+      <div class="col">
+        <input type="text" class="form-control" placeholder="Phase time constant
+" [(ngModel)]="input2" />
+      </div>
+      <div class="col">
+        <button class="btn btn-success" (click)="start()">Activate</button>
+      </div>
+      <div class="col">
+        <button class="btn btn-danger" (click)="stop()">Stop</button>
+      </div>
+      <div class="col">
+        <button class="btn btn-success" (click)="stop()">Activate
+          Auto steering
+        </button>
+      </div>
+    </div>
+
+    <!-- Second Row: Plot and Output Value Field -->
+    <div class="row">
+      <div class="col-8">
+        <div class="plot-container">
+          <!-- Plot placeholder -->
+          <div id="plot" class="plot">
+            <!-- Use your charting library here, e.g., Chart.js or any other library -->
+            <p>Plot goes here</p>
+          </div>
+        </div>
+      </div>
+      <div class="col-4">
+        <input type="text" class="form-control" placeholder="Total Correction" [(ngModel)]="outputValue" readonly />
+      </div>
+    </div>
+  </div>
+</div>
