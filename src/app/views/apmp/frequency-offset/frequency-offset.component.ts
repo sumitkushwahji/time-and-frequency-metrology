@@ -31,9 +31,9 @@ export class FrequencyOffsetComponent implements OnInit, AfterViewInit {
           callback: function (tickValue: number | string) {
             if (typeof tickValue === 'number') {
               if (tickValue >= 1000) {
-                return (tickValue / 1000).toFixed(2) + ' µs'; // Display in microseconds
+                return (tickValue / 1000).toFixed(2) + ' µs'; // Display in microseconds with 2 decimal points
               } else {
-                return tickValue.toFixed(0) + ' ns'; // Display in nanoseconds
+                return tickValue.toFixed(2) + ' ns'; // Display in nanoseconds with 2 decimal points
               }
             }
             return tickValue; // Default case

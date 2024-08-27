@@ -1,13 +1,6 @@
-import {
-  AfterViewInit,
-  ChangeDetectorRef,
-  Component,
-  OnInit,
-  ViewChild,
-} from '@angular/core';
+import { AfterViewInit, Component, OnInit } from '@angular/core';
 import { NplModule } from 'src/app/npl.module';
 import { io } from 'socket.io-client';
-import { BaseChartDirective } from 'ng2-charts';
 import { ChartConfiguration } from 'chart.js';
 
 @Component({
@@ -34,6 +27,17 @@ export class TicDataComponent implements OnInit, AfterViewInit {
           display: true,
           text: 'Value',
         },
+        ticks: {
+          callback: (tickValue: string | number) => {
+            const value =
+              typeof tickValue === 'number' ? tickValue : parseFloat(tickValue);
+            if (value >= 1e3) {
+              return `${(value / 1e3).toFixed(2)} µs`; // Convert to microseconds
+            } else {
+              return `${value.toFixed(2)} ns`; // Keep in nanoseconds
+            }
+          },
+        },
       },
     },
     plugins: {
@@ -52,6 +56,7 @@ export class TicDataComponent implements OnInit, AfterViewInit {
   constructor() {
     this.initializeSocket();
   }
+
   ngOnInit(): void {
     this.socket.on('message', (data: any) => {
       this.updateDashboard(data);
@@ -90,6 +95,7 @@ export class TicDataComponent implements OnInit, AfterViewInit {
       },
     ],
   };
+
   onIPChange(newIP: string) {
     // Update the URL with the new IP address
     this.url = `http://${newIP}:3000`;
@@ -100,6 +106,7 @@ export class TicDataComponent implements OnInit, AfterViewInit {
     }
     this.initializeSocket();
   }
+
   initializeSocket() {
     this.socket = io(this.url, { transports: ['websocket'] });
   }
