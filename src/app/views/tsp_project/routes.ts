@@ -32,6 +32,26 @@ export const routes: Routes = [
           title: 'Time Frequency Staff Data',
         },
       },
+      {
+        path: 'employee-add',
+        loadComponent: () =>
+          import('../tsp_project/employee-add/employee-add.component').then(
+            (m) => m.EmployeeAddComponent
+          ),
+        data: {
+          title: 'Employee Add',
+        },
+      },
+      {
+        path: 'employee-edit',
+        loadComponent: () =>
+          import('../tsp_project/employee-edit/employee-edit.component').then(
+            (m) => m.EmployeeEditComponent
+          ),
+        data: {
+          title: 'Employee Edit',
+        },
+      },
     ],
   },
 ];

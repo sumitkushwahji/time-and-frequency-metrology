@@ -1,18 +1,31 @@
-<table>
+<table class="table table-striped">
   <thead>
     <tr>
       <th>Emp Name</th>
+      <th>Designation</th>
       <th>Emp Id</th>
       <th>Mobile No</th>
-      <th>Email</th>
+      <th>Email Id</th>
+      <th>Salary</th>
+      <th>Joining Date</th>
+      <th>Leaving Date</th>
+      <th>Actions</th>
     </tr>
   </thead>
   <tbody>
     <tr *ngFor="let employee of employees">
       <td>{{ employee.name }}</td>
-      <td>{{ employee.id }}</td>
-      <td>{{ employee.mobile }}</td>
-      <td>{{ employee.email }}</td>
+      <td>{{ employee.designation }}</td>
+      <td>{{ employee.empId }}</td>
+      <td>{{ employee.mobileNo }}</td>
+      <td>{{ employee.emailId }}</td>
+      <td>{{ employee.salary | currency:'INR':'symbol':'1.0-2' }}</td>
+      <td>{{ employee.joiningDate | date }}</td>
+      <td>{{ employee.leavingDate ? (employee.leavingDate | date) : 'N/A' }}</td>
+      <td>
+        <button *ngIf="employee.id !== undefined" (click)="editEmployee(employee.id)">Edit</button>
+        <button *ngIf="employee.id !== undefined" (click)="deleteEmployee(employee.id)">Delete</button>
+      </td>
     </tr>
   </tbody>
 </table>

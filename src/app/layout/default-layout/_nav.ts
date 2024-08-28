@@ -77,6 +77,16 @@ export const navItems: INavData[] = [
         url: '/tsp_project/time-frequency-staff',
         icon: 'nav-icon-bullet',
       },
+      {
+        name: 'Employee Add',
+        url: '/tsp_project/employee-add',
+        icon: 'nav-icon-bullet',
+      },
+      {
+        name: 'Employee Update',
+        url: '/tsp_project/employee-edit',
+        icon: 'nav-icon-bullet',
+      },
     ],
   },
 
