@@ -62,6 +62,23 @@ export const navItems: INavData[] = [
       },
     ],
   },
+  {
+    name: 'TSP Project',
+    url: '/tsp_project',
+    iconComponent: { name: 'cil-puzzle' },
+    children: [
+      {
+        name: 'Project Staff',
+        url: 'tsp_project/project-staff',
+        icon: 'nav-icon-bullet',
+      },
+      {
+        name: 'Time & Frequency Staff',
+        url: '/tsp_project/time-frequency-staff',
+        icon: 'nav-icon-bullet',
+      },
+    ],
+  },
 
   {
     name: 'Base2',

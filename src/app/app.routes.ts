@@ -38,6 +38,11 @@ export const routes: Routes = [
         loadChildren: () => import('./views/apmp/routes').then((m) => m.routes),
       },
       {
+        path: 'tsp_project',
+        loadChildren: () =>
+          import('./views/tsp_project/routes').then((m) => m.routes),
+      },
+      {
         path: 'buttons',
         loadChildren: () =>
           import('./views/buttons/routes').then((m) => m.routes),
