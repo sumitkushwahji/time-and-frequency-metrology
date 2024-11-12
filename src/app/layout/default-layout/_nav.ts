@@ -68,6 +68,11 @@ export const navItems: INavData[] = [
     iconComponent: { name: 'cil-puzzle' },
     children: [
       {
+        name: 'Dashboard',
+        url: '/tsp_project/dashboard',
+        icon: 'nav-icon-bullet',
+      },
+      {
         name: 'Project Staff',
         url: 'tsp_project/project-staff',
         icon: 'nav-icon-bullet',
@@ -83,8 +88,8 @@ export const navItems: INavData[] = [
         icon: 'nav-icon-bullet',
       },
       {
-        name: 'Employee Update',
-        url: '/tsp_project/employee-edit',
+        name: 'Employee Aanalytics',
+        url: '/tsp_project/analytics',
         icon: 'nav-icon-bullet',
       },
     ],

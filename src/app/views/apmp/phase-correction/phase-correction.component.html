@@ -7,8 +7,6 @@
     <table class="table table-bordered">
       <thead>
         <tr>
-          <th>Max</th>
-          <th>Min</th>
           <th>Correction (Hz)</th>
           <th>Action</th>
         </tr>
@@ -16,23 +14,14 @@
       <tbody>
         <tr *ngFor="let row of rows; let i = index">
           <td>
-            <input type="text" class="form-control" [(ngModel)]="row.input1" />
-          </td>
-          <td>
-            <input type="text" class="form-control" [(ngModel)]="row.input2" />
-          </td>
-          <td>
             <input type="text" class="form-control" [(ngModel)]="row.input3" />
           </td>
           <td>
-            <button class="btn btn-danger" (click)="removeRow(i)">Remove</button>
+            <button class="btn btn-success" (click)="applyChanges()">Apply</button>
           </td>
         </tr>
       </tbody>
     </table>
-    <button class="btn btn-primary" (click)="addRow()">Add Row</button>
-  </div>
-  <div class="card-footer text-right">
-    <button class="btn btn-success" (click)="applyChanges()">Apply</button>
+
   </div>
 </div>

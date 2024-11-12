@@ -9,7 +9,7 @@ import { EmployeeService } from 'src/app/services/employee.service';
   standalone: true,
   imports: [NplModule],
   templateUrl: './employee-add.component.html',
-  styleUrl: './employee-add.component.scss',
+  styleUrls: ['./employee-add.component.scss'],
 })
 export class EmployeeAddComponent {
   employee: Employee = {
@@ -30,8 +30,27 @@ export class EmployeeAddComponent {
 
   addEmployee(): void {
     this.employeeService.createEmployee(this.employee).subscribe(
-      () => this.router.navigate(['/employees']),
-      (error) => console.error('Error adding employee', error)
+      () => {
+        alert('Employee Added Successfully');
+        // Reset the form
+        this.resetForm();
+      },
+      (error) => {
+        console.error('Error adding employee', error);
+      }
     );
+  }
+
+  private resetForm(): void {
+    this.employee = {
+      name: '',
+      designation: '',
+      empId: '',
+      mobileNo: '',
+      emailId: '',
+      salary: 0,
+      joiningDate: new Date().toISOString().split('T')[0],
+      leavingDate: '',
+    };
   }
 }

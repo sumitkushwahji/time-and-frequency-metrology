@@ -1,15 +1,32 @@
-table {
+.table {
     width: 100%;
-    margin: 20px 0;
-  }
+    border-collapse: collapse; // Ensure borders between cells are merged
   
-  th, td {
-    padding: 8px;
-    text-align: left;
-    border-bottom: 1px solid #ddd;
-  }
+    thead {
+      background-color: #f8f9fa; // Light background for the header
+    }
   
-  th {
-    background-color: #f4f4f4;
+    th, td {
+      padding: 8px;
+      text-align: left;
+      border-bottom: 1px solid #ddd;
+      vertical-align: middle; // Vertically center content in cells
+    }
+  
+    td {
+      &.edit-mode {
+        // Optionally style cells when in edit mode
+        input {
+          width: 100%;
+          box-sizing: border-box; // Ensure inputs don't overflow their container
+        }
+      }
+    }
+  
+    .actions {
+      button {
+        margin-right: 8px; // Add space between buttons
+      }
+    }
   }
   

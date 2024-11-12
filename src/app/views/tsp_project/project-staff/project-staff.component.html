@@ -1,7 +1,7 @@
 <table class="table table-striped">
   <thead>
     <tr>
-      <th>Emp Name</th>
+      <th>Employee Name</th>
       <th>Designation</th>
       <th>Emp Id</th>
       <th>Mobile No</th>
@@ -14,17 +14,85 @@
   </thead>
   <tbody>
     <tr *ngFor="let employee of employees">
-      <td>{{ employee.name }}</td>
-      <td>{{ employee.designation }}</td>
-      <td>{{ employee.empId }}</td>
-      <td>{{ employee.mobileNo }}</td>
-      <td>{{ employee.emailId }}</td>
-      <td>{{ employee.salary | currency:'INR':'symbol':'1.0-2' }}</td>
-      <td>{{ employee.joiningDate | date }}</td>
-      <td>{{ employee.leavingDate ? (employee.leavingDate | date) : 'N/A' }}</td>
-      <td>
-        <button *ngIf="employee.id !== undefined" (click)="editEmployee(employee.id)">Edit</button>
-        <button *ngIf="employee.id !== undefined" (click)="deleteEmployee(employee.id)">Delete</button>
+      <td [class.edit-mode]="editingEmployeeId === employee.id">
+        <ng-container *ngIf="editingEmployeeId !== employee.id; else editName">
+          {{ employee.name }}
+        </ng-container>
+        <ng-template #editName>
+          <input [(ngModel)]="employee.name" name="name" />
+        </ng-template>
+      </td>
+
+      <td [class.edit-mode]="editingEmployeeId === employee.id">
+        <ng-container *ngIf="editingEmployeeId !== employee.id; else editDesignation">
+          {{ employee.designation }}
+        </ng-container>
+        <ng-template #editDesignation>
+          <input [(ngModel)]="employee.designation" name="designation" />
+        </ng-template>
+      </td>
+
+      <td [class.edit-mode]="editingEmployeeId === employee.id">
+        <ng-container *ngIf="editingEmployeeId !== employee.id; else editEmpId">
+          {{ employee.empId }}
+        </ng-container>
+        <ng-template #editEmpId>
+          <input [(ngModel)]="employee.empId" name="empId" />
+        </ng-template>
+      </td>
+
+      <td [class.edit-mode]="editingEmployeeId === employee.id">
+        <ng-container *ngIf="editingEmployeeId !== employee.id; else editMobileNo">
+          {{ employee.mobileNo }}
+        </ng-container>
+        <ng-template #editMobileNo>
+          <input [(ngModel)]="employee.mobileNo" name="mobileNo" />
+        </ng-template>
+      </td>
+
+      <td [class.edit-mode]="editingEmployeeId === employee.id">
+        <ng-container *ngIf="editingEmployeeId !== employee.id; else editEmailId">
+          {{ employee.emailId }}
+        </ng-container>
+        <ng-template #editEmailId>
+          <input [(ngModel)]="employee.emailId" name="emailId" />
+        </ng-template>
+      </td>
+
+      <td [class.edit-mode]="editingEmployeeId === employee.id">
+        <ng-container *ngIf="editingEmployeeId !== employee.id; else editSalary">
+          {{ employee.salary | currency:'INR':'symbol':'1.0-2' }}
+        </ng-container>
+        <ng-template #editSalary>
+          <input type="number" [(ngModel)]="employee.salary" name="salary" />
+        </ng-template>
+      </td>
+
+      <td [class.edit-mode]="editingEmployeeId === employee.id">
+        <ng-container *ngIf="editingEmployeeId !== employee.id; else editJoiningDate">
+          {{ employee.joiningDate | date }}
+        </ng-container>
+        <ng-template #editJoiningDate>
+          <input type="date" [(ngModel)]="employee.joiningDate" name="joiningDate" />
+        </ng-template>
+      </td>
+
+      <td [class.edit-mode]="editingEmployeeId === employee.id">
+        <ng-container *ngIf="editingEmployeeId !== employee.id; else editLeavingDate">
+          {{ employee.leavingDate ? (employee.leavingDate | date) : 'N/A' }}
+        </ng-container>
+        <ng-template #editLeavingDate>
+          <input type="date" [(ngModel)]="employee.leavingDate" name="leavingDate" />
+        </ng-template>
+      </td>
+
+      <td class="actions">
+        <button *ngIf="editingEmployeeId !== employee.id && employee.id !== undefined"
+          (click)="startEditing(employee.id!)">Edit</button>
+        <button *ngIf="editingEmployeeId === employee.id" (click)="saveEmployee(employee)">Save</button>
+        <button *ngIf="editingEmployeeId === employee.id" (click)="cancelEditing()">Cancel</button>
+        <button *ngIf="employee.id !== undefined && editingEmployeeId !== employee.id"
+          (click)="deleteEmployee(employee.id!)">Delete</button>
       </td>
     </tr>
   </tbody>

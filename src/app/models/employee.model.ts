@@ -1,12 +1,11 @@
-// src/app/employee.model.ts
 export interface Employee {
-  id?: number;
+  id?: number; // or id: number | undefined if you need it to be explicitly undefined
   name: string;
   designation: string;
   empId: string;
   mobileNo: string;
   emailId: string;
   salary: number;
-  joiningDate: string; // ISO date string
-  leavingDate?: string; // ISO date string, optional
+  joiningDate: string;
+  leavingDate?: string; // Optional if leavingDate is not always present
 }

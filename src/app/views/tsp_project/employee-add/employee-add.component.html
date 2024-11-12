@@ -1,28 +1,44 @@
 <!-- src/app/employee-add/employee-add.component.html -->
-<form (ngSubmit)="addEmployee()">
-  <label for="name">Name:</label>
-  <input id="name" [(ngModel)]="employee.name" name="name" required />
+<form (ngSubmit)="addEmployee()" class="employee-form">
+  <div class="form-group">
+    <label for="name">Name:</label>
+    <input id="name" [(ngModel)]="employee.name" name="name" required />
+  </div>
 
-  <label for="designation">Designation:</label>
-  <input id="designation" [(ngModel)]="employee.designation" name="designation" required />
+  <div class="form-group">
+    <label for="designation">Designation:</label>
+    <input id="designation" [(ngModel)]="employee.designation" name="designation" required />
+  </div>
 
-  <label for="empId">Employee ID:</label>
-  <input id="empId" [(ngModel)]="employee.empId" name="empId" required />
+  <div class="form-group">
+    <label for="empId">Employee ID:</label>
+    <input id="empId" [(ngModel)]="employee.empId" name="empId" required />
+  </div>
 
-  <label for="mobileNo">Mobile No:</label>
-  <input id="mobileNo" [(ngModel)]="employee.mobileNo" name="mobileNo" required />
+  <div class="form-group">
+    <label for="mobileNo">Mobile No:</label>
+    <input id="mobileNo" [(ngModel)]="employee.mobileNo" name="mobileNo" required />
+  </div>
 
-  <label for="emailId">Email ID:</label>
-  <input id="emailId" [(ngModel)]="employee.emailId" name="emailId" required />
+  <div class="form-group">
+    <label for="emailId">Email ID:</label>
+    <input id="emailId" [(ngModel)]="employee.emailId" name="emailId" required />
+  </div>
 
-  <label for="salary">Salary:</label>
-  <input id="salary" type="number" [(ngModel)]="employee.salary" name="salary" required />
+  <div class="form-group">
+    <label for="salary">Salary:</label>
+    <input id="salary" type="number" [(ngModel)]="employee.salary" name="salary" required />
+  </div>
 
-  <label for="joiningDate">Joining Date:</label>
-  <input id="joiningDate" type="date" [(ngModel)]="employee.joiningDate" name="joiningDate" required />
+  <div class="form-group">
+    <label for="joiningDate">Joining Date:</label>
+    <input id="joiningDate" type="date" [(ngModel)]="employee.joiningDate" name="joiningDate" required />
+  </div>
 
-  <label for="leavingDate">Leaving Date:</label>
-  <input id="leavingDate" type="date" [(ngModel)]="employee.leavingDate" name="leavingDate" />
+  <div class="form-group">
+    <label for="leavingDate">Leaving Date:</label>
+    <input id="leavingDate" type="date" [(ngModel)]="employee.leavingDate" name="leavingDate" />
+  </div>
 
-  <button type="submit">Submit</button>
+  <button type="submit" class="submit-button">Submit</button>
 </form>

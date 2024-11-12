@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { ChartConfiguration } from 'chart.js';
 import { NplModule } from 'src/app/npl.module';
 
 @Component({
@@ -26,4 +27,38 @@ export class RubidiumSteeringComponent {
     // Implement stop logic here
     this.outputValue = 'Stopped'; // Example output
   }
+  public barChartOptions: ChartConfiguration['options'] = {
+    responsive: true,
+    animation: false,
+    scales: {
+      x: {
+        title: {
+          display: true,
+          text: 'Timestamp',
+        },
+      },
+      y: {
+        title: {
+          display: true,
+          text: 'Value',
+        },
+        ticks: {
+          callback: (tickValue: string | number) => {
+            const value =
+              typeof tickValue === 'number' ? tickValue : parseFloat(tickValue);
+            if (value >= 1e3) {
+              return `${(value / 1e3).toFixed(2)} µs`; // Convert to microseconds
+            } else {
+              return `${value.toFixed(2)} ns`; // Keep in nanoseconds
+            }
+          },
+        },
+      },
+    },
+    plugins: {
+      legend: {
+        display: true,
+      },
+    },
+  };
 }

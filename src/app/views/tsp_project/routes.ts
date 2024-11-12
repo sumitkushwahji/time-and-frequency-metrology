@@ -42,12 +42,23 @@ export const routes: Routes = [
           title: 'Employee Add',
         },
       },
+
       {
-        path: 'employee-edit',
+        path: 'dashboard',
         loadComponent: () =>
-          import('../tsp_project/employee-edit/employee-edit.component').then(
-            (m) => m.EmployeeEditComponent
+          import('../tsp_project/dashboard/dashboard.component').then(
+            (m) => m.DashboardComponent
           ),
+        data: {
+          title: 'Employee Edit',
+        },
+      },
+      {
+        path: 'analytics',
+        loadComponent: () =>
+          import(
+            '../tsp_project/employee-analytics/employee-analytics.component'
+          ).then((m) => m.EmployeeAnalyticsComponent),
         data: {
           title: 'Employee Edit',
         },
