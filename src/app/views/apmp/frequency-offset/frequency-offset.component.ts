@@ -25,18 +25,19 @@ export class FrequencyOffsetComponent implements OnInit, AfterViewInit {
       y: {
         title: {
           display: true,
-          text: 'Value',
+          text: 'Time Difference(s)',
         },
         ticks: {
-          callback: function (tickValue: number | string) {
-            if (typeof tickValue === 'number') {
-              if (tickValue >= 1000) {
-                return (tickValue / 1000).toFixed(2) + ' µs'; // Display in microseconds with 2 decimal points
-              } else {
-                return tickValue.toFixed(2) + ' ns'; // Display in nanoseconds with 2 decimal points
-              }
+          callback: (tickValue: string | number) => {
+            const value =
+              typeof tickValue === 'number' ? tickValue : parseFloat(tickValue);
+
+            // If the value is large enough, format it in exponential notation
+            if (value >= 1e9) {
+              return value.toExponential(0); // Exponential format with 2 decimal places
+            } else {
+              return value.toExponential(2); // Otherwise, display in nanoseconds
             }
-            return tickValue; // Default case
           },
         },
       },
@@ -72,8 +73,11 @@ export class FrequencyOffsetComponent implements OnInit, AfterViewInit {
     const currentTimestamp = new Date(data.timestamp).getTime();
     const currentValue = parseFloat(data.value);
 
-    // Push new data to the chart
-    this.chartBarData.labels.push(data.timestamp);
+    // Format the timestamp as HH:MM:SS
+    const formattedTime = this.formatTimestamp(currentTimestamp);
+
+    // Push new formatted timestamp and value to the chart
+    this.chartBarData.labels.push(formattedTime);
     this.chartBarData.datasets[0].data.push(currentValue);
 
     // Calculate slope if there is a previous data point
@@ -86,7 +90,7 @@ export class FrequencyOffsetComponent implements OnInit, AfterViewInit {
       if (timeDifference !== 0) {
         const slope = (currentValue - previousValue) / timeDifference;
         console.log(`Calculated Slope: ${slope}`); // Debugging line
-        this.slopeData.labels.push(data.timestamp);
+        this.slopeData.labels.push(formattedTime);
         this.slopeData.datasets[0].data.push(slope);
 
         // Ensure only the latest maxDataPoints are kept for slopeData
@@ -118,6 +122,15 @@ export class FrequencyOffsetComponent implements OnInit, AfterViewInit {
     };
   }
 
+  // Helper function to format the timestamp as HH:MM:SS
+  formatTimestamp(timestamp: number): string {
+    const date = new Date(timestamp);
+    const hours = String(date.getHours()).padStart(2, '0');
+    const minutes = String(date.getMinutes()).padStart(2, '0');
+    const seconds = String(date.getSeconds()).padStart(2, '0');
+    return `${hours}:${minutes}:${seconds}`;
+  }
+
   ngAfterViewInit(): void {}
 
   months = [] as any[];
@@ -126,7 +139,7 @@ export class FrequencyOffsetComponent implements OnInit, AfterViewInit {
     labels: [...this.months].slice(0, 7),
     datasets: [
       {
-        label: 'TI(A->B)',
+        label: 'UTC(NPLI) - Rb',
         data: [] as any[],
         backgroundColor: 'rgba(138, 43, 226, 0.6)',
       },
@@ -137,7 +150,7 @@ export class FrequencyOffsetComponent implements OnInit, AfterViewInit {
     labels: [] as any[],
     datasets: [
       {
-        label: 'Slope',
+        label: 'Slope of TIC Reading',
         data: [] as any[],
         borderColor: 'rgba(0, 255, 0, 1)',
         backgroundColor: 'rgba(0, 255, 0, 0.2)',

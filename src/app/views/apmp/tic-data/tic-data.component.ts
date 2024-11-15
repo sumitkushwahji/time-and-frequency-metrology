@@ -25,16 +25,16 @@ export class TicDataComponent implements OnInit, AfterViewInit {
       y: {
         title: {
           display: true,
-          text: 'Value',
+          text: 'Time Difference(s)',
         },
         ticks: {
           callback: (tickValue: string | number) => {
             const value =
               typeof tickValue === 'number' ? tickValue : parseFloat(tickValue);
-            if (value >= 1e3) {
-              return `${(value / 1e3).toFixed(2)} µs`; // Convert to microseconds
+            if (value >= 1e9) {
+              return `${(value / 1e9).toFixed(2)} µs`; // Convert to microseconds
             } else {
-              return `${value.toFixed(2)} ns`; // Keep in nanoseconds
+              return value.toExponential(2); // Keep in nanoseconds
             }
           },
         },
@@ -64,13 +64,16 @@ export class TicDataComponent implements OnInit, AfterViewInit {
   }
 
   updateDashboard(data: any) {
-    const maxDataPoints = 250;
+    const maxDataPoints = 100;
 
-    // Push new data to the chart
-    this.chartBarData.labels.push(data.timestamp);
+    // Format the timestamp as HH:MM:SS
+    const formattedTime = this.formatTimestamp(data.timestamp);
+
+    // Push the formatted timestamp and value to the chart
+    this.chartBarData.labels.push(formattedTime);
     this.chartBarData.datasets[0].data.push(parseFloat(data.value));
 
-    // Ensure only the latest 10 data points are kept
+    // Ensure only the latest 100 data points are kept
     if (this.chartBarData.labels.length > maxDataPoints) {
       this.chartBarData.labels = this.chartBarData.labels.slice(-maxDataPoints);
       this.chartBarData.datasets[0].data =
@@ -81,6 +84,15 @@ export class TicDataComponent implements OnInit, AfterViewInit {
     this.chartBarData = { ...this.chartBarData };
   }
 
+  // Helper function to format the timestamp as HH:MM:SS
+  formatTimestamp(timestamp: number): string {
+    const date = new Date(timestamp);
+    const hours = String(date.getHours()).padStart(2, '0');
+    const minutes = String(date.getMinutes()).padStart(2, '0');
+    const seconds = String(date.getSeconds()).padStart(2, '0');
+    return `${hours}:${minutes}:${seconds}`;
+  }
+
   ngAfterViewInit(): void {}
 
   months = [] as any[];
@@ -89,7 +101,7 @@ export class TicDataComponent implements OnInit, AfterViewInit {
     labels: [...this.months].slice(0, 7),
     datasets: [
       {
-        label: 'TI(A->B)',
+        label: 'UTC(NPLI) - Rb',
         data: [] as any[],
         backgroundColor: 'rgba(138, 43, 226, 0.6)',
       },

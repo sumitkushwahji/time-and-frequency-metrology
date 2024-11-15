@@ -34,13 +34,46 @@ export class RubidiumSteeringComponent {
       x: {
         title: {
           display: true,
-          text: 'Timestamp',
+          text: 'Steering Interval',
+        },
+        ticks: {
+          callback: (tickValue: string | number) => {
+            const value =
+              typeof tickValue === 'number' ? tickValue : parseFloat(tickValue);
+            if (value >= 1e3) {
+              return `${(value / 1e3).toFixed(2)} µs`; // Convert to microseconds
+            } else {
+              return `${value.toFixed(2)} ns`; // Keep in nanoseconds
+            }
+          },
         },
       },
       y: {
+        position: 'left', // Primary Y-axis on the left
         title: {
           display: true,
-          text: 'Value',
+          text: 'Correction',
+        },
+        ticks: {
+          callback: (tickValue: string | number) => {
+            const value =
+              typeof tickValue === 'number' ? tickValue : parseFloat(tickValue);
+            if (value >= 1e3) {
+              return `${(value / 1e3).toFixed(2)} µs`; // Convert to microseconds
+            } else {
+              return `${value.toFixed(2)} ns`; // Keep in nanoseconds
+            }
+          },
+        },
+      },
+      yRight: {
+        position: 'right', // Secondary Y-axis on the right
+        title: {
+          display: true,
+          text: 'TIC Reading',
+        },
+        grid: {
+          drawOnChartArea: false, // Disable grid lines for the right Y-axis
         },
         ticks: {
           callback: (tickValue: string | number) => {

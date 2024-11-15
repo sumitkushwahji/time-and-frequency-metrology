@@ -51,6 +51,16 @@ export const navItems: INavData[] = [
         icon: 'nav-icon-bullet',
       },
       {
+        name: 'Frequency Adjustment',
+        url: '/apmp/frequency-adjustment',
+        icon: 'nav-icon-bullet',
+      },
+      {
+        name: 'Phase Adjustment',
+        url: '/apmp/phase-adjustment',
+        icon: 'nav-icon-bullet',
+      },
+      {
         name: 'Phase Correction',
         url: '/apmp/phase-correction',
         icon: 'nav-icon-bullet',

@@ -43,6 +43,26 @@ export const routes: Routes = [
         },
       },
       {
+        path: 'phase-adjustment',
+        loadComponent: () =>
+          import('./phase-adjustment/phase-adjustment.component').then(
+            (m) => m.PhaseAdjustmentComponent
+          ),
+        data: {
+          title: 'Phase-Adjustment',
+        },
+      },
+      {
+        path: 'frequency-adjustment',
+        loadComponent: () =>
+          import('./frequency-adjustment/frequency-adjustment.component').then(
+            (m) => m.FrequencyAdjustmentComponent
+          ),
+        data: {
+          title: 'Frequency-Adjustment',
+        },
+      },
+      {
         path: 'phase-correction',
         loadComponent: () =>
           import('./phase-correction/phase-correction.component').then(

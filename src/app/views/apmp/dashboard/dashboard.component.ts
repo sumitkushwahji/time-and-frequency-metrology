@@ -5,6 +5,8 @@ import { FrequencyOffsetComponent } from '../frequency-offset/frequency-offset.c
 import { PhaseCorrectionComponent } from '../phase-correction/phase-correction.component';
 import { RubidiumSteeringComponent } from '../rubidium-steering/rubidium-steering.component';
 import { TicDataComponent } from '../tic-data/tic-data.component';
+import { FrequencyAdjustmentComponent } from '../frequency-adjustment/frequency-adjustment.component';
+import { PhaseAdjustmentComponent } from '../phase-adjustment/phase-adjustment.component';
 
 @Component({
   selector: 'app-dashboard',
@@ -15,6 +17,8 @@ import { TicDataComponent } from '../tic-data/tic-data.component';
     PhaseCorrectionComponent,
     RubidiumSteeringComponent,
     TicDataComponent,
+    FrequencyAdjustmentComponent,
+    PhaseAdjustmentComponent,
   ],
   templateUrl: './dashboard.component.html',
   styleUrl: './dashboard.component.scss',

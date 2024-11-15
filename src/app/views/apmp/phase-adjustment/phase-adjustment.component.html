@@ -1,0 +1,36 @@
+<div class="card">
+  <div class="card-header">
+    <h5 class="card-title">Initial Time Offset Adjustment
+    </h5>
+  </div>
+  <div class="card-body">
+
+    <div class="container">
+
+      <div class="t">
+        <table class="table table-bordered">
+          <thead>
+            <tr>
+              <th colspan="2">Phase Adjustment(s)</th>
+
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>
+                <input type="text" class="form-control" placeholder="Nenosecond" />
+              </td>
+              <td>
+                <button class="btn btn-success">Apply</button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="value-box">
+        <strong>TIC Value:</strong> {{ currentValue || 'Waiting for data...' }}
+      </div>
+    </div>
+
+  </div>
+</div>
