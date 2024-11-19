@@ -1,21 +1,29 @@
+<app-apmp-nav></app-apmp-nav>
+<!-- First Row: Three Equal-Sized Columns -->
+<h1 style="text-align: center;">Rubidium with Respect to UTC(NPLI)</h1>
+<c-row>
+  <c-col xs="12" md="6">
+    <app-tic-data></app-tic-data>
+  </c-col>
+  <c-col xs="12" md="6">
+    <app-frequency-offset></app-frequency-offset>
+  </c-col>
+</c-row>
+<c-row>
+  <c-col xs="12" md="6">
+    <app-phase-adjustment></app-phase-adjustment>
+  </c-col>
+  <c-col xs="12" md="6">
+    <app-frequency-adjustment></app-frequency-adjustment>
+  </c-col>
+</c-row>
+<br>
 <div class="container">
-  <!-- First Row: Three Equal-Sized Columns -->
-  <c-row>
-    <c-col xs="12" md="6">
-      <app-tic-data></app-tic-data>
-    </c-col>
-    <c-col xs="12" md="6">
-      <app-frequency-offset></app-frequency-offset>
-    </c-col>
-  </c-row>
-  <c-row>
-    <c-col xs="12">
+  <!-- <c-row>
+    <c-col>
       <app-phase-adjustment></app-phase-adjustment>
     </c-col>
-  </c-row>
-
-
-
+  </c-row> -->
   <c-row>
     <app-rubidium-steering></app-rubidium-steering>
   </c-row>

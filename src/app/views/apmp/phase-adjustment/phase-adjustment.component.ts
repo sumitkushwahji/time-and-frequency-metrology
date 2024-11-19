@@ -1,73 +1,64 @@
 import { AfterViewInit, Component, OnInit } from '@angular/core';
 import { io } from 'socket.io-client';
 import { CommonModule } from '@angular/common';
+import { environment } from 'src/environments/environment';
+import { TicDataService } from '../../../services/tic-data.service'; // Import the service
+import { Socket } from 'ngx-socket-io';
+import { NplModule } from 'src/app/npl.module';
 
 @Component({
   selector: 'app-phase-adjustment',
   standalone: true,
-  imports: [CommonModule],
+  imports: [NplModule],
+
   templateUrl: './phase-adjustment.component.html',
   styleUrls: ['./phase-adjustment.component.scss'],
 })
-export class PhaseAdjustmentComponent implements OnInit, AfterViewInit {
-  ipAddress = '172.16.16.31';
-
-  private socket: any;
-  private url: string = `http://${this.ipAddress}:3000`;
-  currentValue: string = '';
-
-  constructor() {
-    this.initializeSocket();
-  }
+export class PhaseAdjustmentComponent implements OnInit {
+  ticValue: any;
+  phaseValue: string = ''; // Holds the input value from the UI
+  constructor(private ticDataService: TicDataService, private socket: Socket) {}
 
   ngOnInit(): void {
-    this.socket.on('message', (data: any) => {
-      this.updateDashboard(data);
-    });
-  }
-
-  updateDashboard(data: any) {
-    // Parse the received data if it's a JSON string
-    let parsedData;
-    try {
-      parsedData = typeof data === 'string' ? JSON.parse(data) : data;
-    } catch (error) {
-      console.error('Invalid data format:', data);
-      return;
-    }
-
-    // Extract and update the value in nanoseconds
-    if (parsedData && parsedData.value) {
-      const valueString = parsedData.value;
-      const valueInSeconds = parseFloat(valueString.split(' ')[0]); // Extract the numeric value in seconds
-
-      // Convert the value to nanoseconds
-      const valueInNanoseconds = valueInSeconds * 1e9;
-
-      // Update the currentValue in nanoseconds, formatted to avoid scientific notation
-      this.currentValue = valueInNanoseconds.toFixed(2) + ' ns'; // Display without decimal points
-    }
-  }
-
-  ngAfterViewInit(): void {}
-
-  onIPChange(newIP: string) {
-    this.url = `http://${newIP}:3000`;
-    if (this.socket) {
-      this.socket.disconnect();
-    }
-    this.initializeSocket();
-  }
-
-  initializeSocket() {
-    this.socket = io(this.url, { transports: ['websocket'] });
-
-    this.socket.on('connect', () => {
-      console.log('Socket connected successfully');
+    this.ticDataService.ticValue$.subscribe((data) => {
+      if (data) {
+        this.ticValue = data;
+      }
     });
 
-    this.socket.on('connect_error', (error: any) => {
-      console.error('Connection Error:', error);
-    });
+    // Listen for backend status updates
+    this.socket.on(
+      'phaseCorrectionStatus',
+      (status: { status: string; value?: number; message?: string }) => {
+        console.log('Phase Correction Status:', status); // Log status to console
+        if (status.status === 'success') {
+          alert(`Success: Applied correction value: ${status.value}`);
+        } else {
+          alert(`Error: ${status.message || 'Unknown error occurred'}`);
+        }
+      }
+    );
+  }
+
+  formatToNanoseconds(value: any): string {
+    const numericValue = parseFloat(value);
+    if (isNaN(numericValue)) {
+      return 'Invalid value'; // Handle invalid values gracefully
+    }
+    const nanoseconds = numericValue * 1e9; // Convert the value to nanoseconds
+    return nanoseconds.toFixed(2); // Format to two decimal places
+  }
+
+  applyPhaseAdjustment() {
+    const nanoseconds = parseFloat(this.phaseValue); // Assume input is in nanoseconds
+    if (!isNaN(nanoseconds)) {
+      this.socket.emit('applyPhaseCorrection', {
+        corrValue: nanoseconds,
+        flag: 0,
+      }); // Emit to the backend in nanoseconds
+      alert(`Applied correction value: ${nanoseconds} nanoseconds`);
+    } else {
+      alert('Please enter a valid number.'); // Handle invalid input
+    }
   }
 }

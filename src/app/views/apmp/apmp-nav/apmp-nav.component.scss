@@ -1,0 +1,24 @@
+body{
+    width: fit-content;
+    height: fit-content;
+    margin-top: 8rem;
+  }
+.header{
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    display: inline;
+    
+    height: 7rem; /* Ensure this matches the toolbar height */
+    padding: 0 16px;
+    z-index: 1000; /* Ensure toolbar is on top of other elements */
+}
+
+
+.header-text{
+    font-size: 30px;
+    font-weight: bold;
+    color: darkblue;
+    margin-left: 22rem;
+}

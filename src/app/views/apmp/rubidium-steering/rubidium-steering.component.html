@@ -1,58 +1,10 @@
-<div class="card">
-  <div class="card-header">
-    <h5 class="card-title">Frequency Adjustment
-    </h5>
-  </div>
-  <div class="card-body">
-    <table class="table table-bordered">
-      <thead>
-        <tr>
-          <th>Steering Interval</th>
-          <th>Frequency Adjustment</th>
-          <th>Phase Adjustment</th>
-
-
-        </tr>
-      </thead>
-      <tbody>
-        <tr>
-          <td>
-            <input type="text" class="form-control" placeholder="Number in Seconds" />
-          </td>
-          <td>
-            <input type="text" class="form-control" placeholder="Slope Multiplier" />
-          </td>
-          <td>
-            <input type="text" class="form-control" placeholder="Phase Time Constant" />
-          </td>
-        </tr>
-        <tr>
-          <td colspan="3">
-            <button class="btn btn-success">Apply</button> &nbsp; &nbsp;
-            <button class="btn btn-danger">Stop</button>
-          </td>
-
-        </tr>
-      </tbody>
-    </table>
-
-  </div>
-
-  <div class="card-body">
-
-    <div class="plot-container">
-      <!-- Plot placeholder -->
-      <div id="plot" class="plot">
-        <!-- Use your charting library here, e.g., Chart.js or any other library -->
-        <c-card class="mb-4">
-          <c-card-header>
-            Rubidium Steering Plot
-          </c-card-header>
-          <c-card-body>
-            <c-chart type="line" [data]="" [options]="barChartOptions"></c-chart>
-          </c-card-body>
-        </c-card>
-      </div>
-    </div>
-  </div>
-</div>
+<c-col>
+  <c-card class="mb-4">
+    <c-card-header style="text-align: center;">
+      TIC Real-time Data
+    </c-card-header>
+    <c-card-body>
+      <c-chart type="line" [data]="chartBarData" [options]="barChartOptions"></c-chart>
+    </c-card-body>
+  </c-card>
+</c-col>

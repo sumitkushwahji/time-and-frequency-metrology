@@ -2,6 +2,8 @@ import { AfterViewInit, Component, OnInit } from '@angular/core';
 import { NplModule } from 'src/app/npl.module';
 import { io } from 'socket.io-client';
 import { ChartConfiguration } from 'chart.js';
+import { environment } from 'src/environments/environment';
+import { TicDataService } from '../../../services/tic-data.service'; // Import the service
 
 @Component({
   selector: 'app-tic-data',
@@ -11,7 +13,9 @@ import { ChartConfiguration } from 'chart.js';
   styleUrls: ['./tic-data.component.scss'],
 })
 export class TicDataComponent implements OnInit, AfterViewInit {
-  ipAddress = '172.16.16.31';
+  ipAddress: string = environment.websocket.host; // Bind to the environment host or default to localhost
+  private port: number = environment.websocket.port; // Use environment port
+  private socket: any;
   public barChartOptions: ChartConfiguration['options'] = {
     responsive: true,
     animation: false,
@@ -32,7 +36,8 @@ export class TicDataComponent implements OnInit, AfterViewInit {
             const value =
               typeof tickValue === 'number' ? tickValue : parseFloat(tickValue);
             if (value >= 1e9) {
-              return `${(value / 1e9).toFixed(2)} µs`; // Convert to microseconds
+              return value.toExponential(2); // Keep in nanoseconds
+              //return `${(value / 1e9).toFixed(2)} µs`; // Convert to microseconds
             } else {
               return value.toExponential(2); // Keep in nanoseconds
             }
@@ -49,17 +54,19 @@ export class TicDataComponent implements OnInit, AfterViewInit {
 
   satData: any;
   selectedSatellite = 'IRGSV';
-  private socket: any;
-  private url: string = `http://${this.ipAddress}:3000`;
+
+  private url: string = `http://${this.ipAddress}:${this.port}`;
   messages: string[] = [];
 
-  constructor() {
+  constructor(private ticDataService: TicDataService) {
     this.initializeSocket();
   }
 
   ngOnInit(): void {
     this.socket.on('message', (data: any) => {
       this.updateDashboard(data);
+
+      this.ticDataService.sendTicValue(data); // Send data through the service
     });
   }
 
@@ -110,7 +117,7 @@ export class TicDataComponent implements OnInit, AfterViewInit {
 
   onIPChange(newIP: string) {
     // Update the URL with the new IP address
-    this.url = `http://${newIP}:3000`;
+    this.url = `http://${newIP}:${this.port}`;
 
     // Reinitialize the WebSocket connection with the new URL
     if (this.socket) {

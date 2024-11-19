@@ -2,6 +2,7 @@ import { AfterViewInit, Component, OnInit } from '@angular/core';
 import { ChartConfiguration } from 'chart.js';
 import { io } from 'socket.io-client';
 import { NplModule } from 'src/app/npl.module';
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-frequency-offset',
@@ -11,7 +12,9 @@ import { NplModule } from 'src/app/npl.module';
   styleUrls: ['./frequency-offset.component.scss'],
 })
 export class FrequencyOffsetComponent implements OnInit, AfterViewInit {
-  ipAddress = '172.16.16.31';
+  ipAddress: string = environment.websocket.host; // Bind to the environment host or default to localhost
+  private port: number = environment.websocket.port; // Use environment port
+  private socket: any;
   barChartOptions: ChartConfiguration['options'] = {
     responsive: true,
     animation: false,
@@ -25,7 +28,7 @@ export class FrequencyOffsetComponent implements OnInit, AfterViewInit {
       y: {
         title: {
           display: true,
-          text: 'Time Difference(s)',
+          text: 'Time Difference(Hz)',
         },
         ticks: {
           callback: (tickValue: string | number) => {
@@ -51,8 +54,7 @@ export class FrequencyOffsetComponent implements OnInit, AfterViewInit {
 
   satData: any;
   selectedSatellite = 'IRGSV';
-  private socket: any;
-  private url: string = `http://${this.ipAddress}:3000`;
+  private url: string = `http://${this.ipAddress}:${this.port}`;
   messages: string[] = [];
   previousDataPoint: { timestamp: number; value: number } | null = null;
 
@@ -161,7 +163,7 @@ export class FrequencyOffsetComponent implements OnInit, AfterViewInit {
 
   onIPChange(newIP: string) {
     // Update the URL with the new IP address
-    this.url = `http://${newIP}:3000`;
+    this.url = `http://${newIP}:${this.port}`;
 
     // Reinitialize the WebSocket connection with the new URL
     if (this.socket) {

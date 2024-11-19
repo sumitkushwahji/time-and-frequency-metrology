@@ -7,9 +7,10 @@ import { RubidiumSteeringComponent } from '../rubidium-steering/rubidium-steerin
 import { TicDataComponent } from '../tic-data/tic-data.component';
 import { FrequencyAdjustmentComponent } from '../frequency-adjustment/frequency-adjustment.component';
 import { PhaseAdjustmentComponent } from '../phase-adjustment/phase-adjustment.component';
+import { ApmpNavComponent } from '../apmp-nav/apmp-nav.component';
 
 @Component({
-  selector: 'app-dashboard',
+  selector: 'app-apmp-dashboard',
   standalone: true,
   imports: [
     NplModule,
@@ -19,6 +20,7 @@ import { PhaseAdjustmentComponent } from '../phase-adjustment/phase-adjustment.c
     TicDataComponent,
     FrequencyAdjustmentComponent,
     PhaseAdjustmentComponent,
+    ApmpNavComponent,
   ],
   templateUrl: './dashboard.component.html',
   styleUrl: './dashboard.component.scss',

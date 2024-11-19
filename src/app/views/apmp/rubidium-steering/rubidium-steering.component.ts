@@ -1,6 +1,9 @@
-import { Component } from '@angular/core';
+import { AfterViewInit, Component, OnInit } from '@angular/core';
 import { ChartConfiguration } from 'chart.js';
+import { io } from 'socket.io-client';
 import { NplModule } from 'src/app/npl.module';
+import { TicDataService } from 'src/app/services/tic-data.service';
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-rubidium-steering',
@@ -9,24 +12,12 @@ import { NplModule } from 'src/app/npl.module';
   templateUrl: './rubidium-steering.component.html',
   styleUrl: './rubidium-steering.component.scss',
 })
-export class RubidiumSteeringComponent {
-  input1: string = '';
-  input2: string = '';
-  outputValue: string = '';
+export class RubidiumSteeringComponent implements OnInit, AfterViewInit {
+  ipAddress: string = environment.websocket.host;
+  private port: number = environment.websocket.port;
+  private socket: any;
 
-  // Placeholder function for starting an operation
-  start() {
-    console.log('Start clicked with inputs:', this.input1, this.input2);
-    // Implement start logic here
-    this.outputValue = 'Started'; // Example output
-  }
-
-  // Placeholder function for stopping an operation
-  stop() {
-    console.log('Stop clicked');
-    // Implement stop logic here
-    this.outputValue = 'Stopped'; // Example output
-  }
+  // Chart configuration with dual y-axes
   public barChartOptions: ChartConfiguration['options'] = {
     responsive: true,
     animation: false,
@@ -34,57 +25,30 @@ export class RubidiumSteeringComponent {
       x: {
         title: {
           display: true,
-          text: 'Steering Interval',
-        },
-        ticks: {
-          callback: (tickValue: string | number) => {
-            const value =
-              typeof tickValue === 'number' ? tickValue : parseFloat(tickValue);
-            if (value >= 1e3) {
-              return `${(value / 1e3).toFixed(2)} µs`; // Convert to microseconds
-            } else {
-              return `${value.toFixed(2)} ns`; // Keep in nanoseconds
-            }
-          },
+          text: 'Steering Interval (s)',
         },
       },
       y: {
-        position: 'left', // Primary Y-axis on the left
         title: {
           display: true,
-          text: 'Correction',
+          text: 'Frequency & Phase Corrections',
         },
+        position: 'left',
         ticks: {
-          callback: (tickValue: string | number) => {
-            const value =
-              typeof tickValue === 'number' ? tickValue : parseFloat(tickValue);
-            if (value >= 1e3) {
-              return `${(value / 1e3).toFixed(2)} µs`; // Convert to microseconds
-            } else {
-              return `${value.toFixed(2)} ns`; // Keep in nanoseconds
-            }
-          },
+          callback: (value: number | string) => `${value}`,
         },
       },
-      yRight: {
-        position: 'right', // Secondary Y-axis on the right
+      y1: {
         title: {
           display: true,
           text: 'TIC Reading',
         },
+        position: 'right',
         grid: {
-          drawOnChartArea: false, // Disable grid lines for the right Y-axis
+          drawOnChartArea: false,
         },
         ticks: {
-          callback: (tickValue: string | number) => {
-            const value =
-              typeof tickValue === 'number' ? tickValue : parseFloat(tickValue);
-            if (value >= 1e3) {
-              return `${(value / 1e3).toFixed(2)} µs`; // Convert to microseconds
-            } else {
-              return `${value.toFixed(2)} ns`; // Keep in nanoseconds
-            }
-          },
+          callback: (value: number | string) => `${value}`,
         },
       },
     },
@@ -94,4 +58,114 @@ export class RubidiumSteeringComponent {
       },
     },
   };
+
+  chartBarData = {
+    labels: [] as string[], // X-axis labels
+    datasets: [
+      {
+        label: 'Frequency Correction',
+        data: [] as number[],
+        backgroundColor: 'rgba(75, 192, 192, 0.6)',
+        borderColor: 'rgba(75, 192, 192, 1)',
+        borderWidth: 1,
+        yAxisID: 'y',
+      },
+      {
+        label: 'Phase Correction',
+        data: [] as number[],
+        backgroundColor: 'rgba(255, 99, 132, 0.6)',
+        borderColor: 'rgba(255, 99, 132, 1)',
+        borderWidth: 1,
+        yAxisID: 'y',
+      },
+      {
+        label: 'Average TIC Value',
+        data: [] as number[],
+        backgroundColor: 'rgba(54, 162, 235, 0.6)',
+        borderColor: 'rgba(54, 162, 235, 1)',
+        borderWidth: 1,
+        yAxisID: 'y1',
+      },
+    ],
+  };
+
+  frequencyCorrection: number = 0;
+  phaseCorrection: number = 0;
+  ticReading: number = 0;
+  steeringInterval: number = 0;
+
+  private url: string = `http://${this.ipAddress}:${this.port}`;
+
+  constructor(private ticDataService: TicDataService) {
+    this.initializeSocket();
+  }
+
+  ngOnInit(): void {
+    // Listen for frequency correction data
+    this.socket.on('freq_corr', (data: any) => {
+      this.frequencyCorrection = data.value;
+      this.updateDashboard(data.timestamp);
+    });
+
+    // Listen for phase correction data
+    this.socket.on('phase_corr', (data: any) => {
+      this.phaseCorrection = data.value;
+      this.updateDashboard(data.timestamp);
+    });
+
+    // Listen for TIC reading data
+    this.socket.on('currentTic', (data: any) => {
+      const ticValues = data.value;
+      this.ticReading =
+        ticValues.reduce((sum: number, val: number) => sum + val, 0) /
+        ticValues.length; // Calculate average
+      this.updateDashboard(data.timestamp);
+    });
+
+    // Listen for slop interval
+    this.socket.on('slop_Interval', (data: any) => {
+      this.steeringInterval = data.value;
+      this.updateDashboard(data.timestamp);
+    });
+  }
+
+  updateDashboard(timestamp: string) {
+    const maxDataPoints = 100;
+
+    // Use steering interval or fallback to formatted timestamp
+    const formattedTime =
+      this.steeringInterval || this.formatTimestamp(timestamp);
+
+    // Push data to the respective datasets
+    this.chartBarData.labels.push(String(formattedTime));
+    this.chartBarData.datasets[0].data.push(this.frequencyCorrection);
+    this.chartBarData.datasets[1].data.push(this.phaseCorrection);
+    this.chartBarData.datasets[2].data.push(this.ticReading);
+
+    // Maintain the maximum number of points
+    if (this.chartBarData.labels.length > maxDataPoints) {
+      this.chartBarData.labels = this.chartBarData.labels.slice(-maxDataPoints);
+      this.chartBarData.datasets.forEach((dataset) => {
+        dataset.data = dataset.data.slice(-maxDataPoints);
+      });
+    }
+
+    // Update chartBarData without reinitializing
+    this.chartBarData = { ...this.chartBarData };
+  }
+
+  // Format timestamp as HH:MM:SS
+  formatTimestamp(timestamp: string): string {
+    const date = new Date(timestamp);
+    const hours = String(date.getHours()).padStart(2, '0');
+    const minutes = String(date.getMinutes()).padStart(2, '0');
+    const seconds = String(date.getSeconds()).padStart(2, '0');
+    return `${hours}:${minutes}:${seconds}`;
+  }
+
+  ngAfterViewInit(): void {}
+
+  initializeSocket() {
+    this.socket = io(this.url, { transports: ['websocket'] });
+  }
 }

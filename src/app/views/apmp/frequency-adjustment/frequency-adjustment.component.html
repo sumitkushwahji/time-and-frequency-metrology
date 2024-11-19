@@ -1,43 +1,49 @@
-<div class="card">
-  <div class="card-header">
-    <h5 class="card-title">Frequency Adjustment
-    </h5>
+<c-col>
+  <div class="card">
+    <div class="card-header">
+      <h5 class="card-title">Frequency and Phase Adjustment</h5>
+    </div>
+    <div class="card-body">
+      <table class="table table-bordered">
+        <thead>
+          <tr>
+            <th>Frequency Adjustment</th>
+            <th>Phase Adjustment</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>
+              <input type="text" class="form-control" placeholder="Slope Multiplier" [(ngModel)]="slopeMultiplier" />
+            </td>
+            <td>
+              <input type="text" class="form-control" placeholder="Phase Time Constant"
+                [(ngModel)]="phaseTimeConstant" />
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <input type="text" class="form-control" placeholder="Steering Interval" [(ngModel)]="steeringInterval" />
+              <button class="btn btn-success mt-2" (click)="startSteering()">Start Steering</button>
+              <button class="btn btn-danger mt-2" (click)="stopSteering()">Stop Steering</button>
+            </td>
+            <td>
+              <input type="text" class="form-control" placeholder="Error Limit" [(ngModel)]="errorLimit" />
+              <button class="btn btn-success mt-2" (click)="startAutoSteering()">Start Auto Steering</button>
+              <button class="btn btn-danger mt-2" (click)="stopAutoSteering()">Stop Auto Steering</button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+
+      <!-- Display real-time data -->
+      <div class="mt-4">
+        <h6>Real-Time Data</h6>
+        <p><strong>Frequency Correction:</strong> {{ frequencyCorrection | json }}</p>
+        <p><strong>Phase Correction:</strong> {{ phaseCorrection | json }}</p>
+        <p><strong>TIC Reading:</strong> {{ currentTicValue | json }}</p>
+        <p><strong>Slop Interval</strong> {{ steering_Interval | json }}</p>
+      </div>
+    </div>
   </div>
-  <div class="card-body">
-    <table class="table table-bordered">
-      <thead>
-        <tr>
-          <th>Steering Interval</th>
-          <th>Frequency Adjustment</th>
-          <th>Phase Adjustment</th>
-
-
-        </tr>
-      </thead>
-      <tbody>
-        <tr>
-          <td>
-            <input type="text" class="form-control" placeholder="Number in Seconds" />
-          </td>
-          <td>
-            <input type="text" class="form-control" placeholder="Slope Multiplier" />
-          </td>
-          <td>
-            <input type="text" class="form-control" placeholder="Phase Time Constant" />
-          </td>
-        </tr>
-        <tr>
-          <td colspan="3">
-            <button class="btn btn-success">Apply</button> &nbsp; &nbsp;
-            <button class="btn btn-danger">Stop</button>
-          </td>
-
-        </tr>
-      </tbody>
-    </table>
-
-  </div>
-  <div class="card-body">
-
-
-  </div>
+</c-col>

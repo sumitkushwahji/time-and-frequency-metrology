@@ -5,6 +5,10 @@
 export const environment = {
   domain: 'http//',
   production: false,
+  websocket: {
+    host: 'localhost',
+    port: 5000,
+  },
 };
 
 /*
