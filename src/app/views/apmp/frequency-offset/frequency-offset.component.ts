@@ -28,7 +28,7 @@ export class FrequencyOffsetComponent implements OnInit, AfterViewInit {
       y: {
         title: {
           display: true,
-          text: 'Time Difference(Hz)',
+          text: 'Frequency Offset(Hz)',
         },
         ticks: {
           callback: (tickValue: string | number) => {
@@ -69,7 +69,7 @@ export class FrequencyOffsetComponent implements OnInit, AfterViewInit {
   }
 
   updateDashboard(data: any) {
-    const maxDataPoints = 250;
+    const maxDataPoints = 50;
 
     // Convert timestamps to milliseconds if they are not already in that format
     const currentTimestamp = new Date(data.timestamp).getTime();

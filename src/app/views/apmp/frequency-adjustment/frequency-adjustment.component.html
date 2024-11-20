@@ -1,37 +1,51 @@
 <c-col>
   <div class="card">
     <div class="card-header">
-      <h5 class="card-title">Frequency and Phase Adjustment</h5>
+      <h5 class="card-title">Steering</h5>
     </div>
     <div class="card-body">
       <table class="table table-bordered">
         <thead>
           <tr>
-            <th>Frequency Adjustment</th>
-            <th>Phase Adjustment</th>
+
+
           </tr>
         </thead>
         <tbody>
           <tr>
-            <td>
-              <input type="text" class="form-control" placeholder="Slope Multiplier" [(ngModel)]="slopeMultiplier" />
+            <th>Periodic Steering</th>
+            <td><label>Slope Multiplier</label>
+              <input type="text" class="form-control" placeholder="1.5" [(ngModel)]="slopeMultiplier" />
+            </td>
+            <td><label>Phase Time Constant</label>
+              <input type="text" class="form-control" placeholder="10" [(ngModel)]="phaseTimeConstant" />
+            </td>
+            <td><label>Steering Interval</label>
+              <input type="text" class="form-control" placeholder="10" [(ngModel)]="steeringInterval" />
             </td>
             <td>
-              <input type="text" class="form-control" placeholder="Phase Time Constant"
-                [(ngModel)]="phaseTimeConstant" />
+              <button class="btn btn-success mt-2" (click)="startSteering()">Start</button></td>
+            <td>
+              <button class="btn btn-danger mt-2" (click)="stopSteering()">Stop</button>
             </td>
+
           </tr>
           <tr>
-            <td>
-              <input type="text" class="form-control" placeholder="Steering Interval" [(ngModel)]="steeringInterval" />
-              <button class="btn btn-success mt-2" (click)="startSteering()">Start Steering</button>
-              <button class="btn btn-danger mt-2" (click)="stopSteering()">Stop Steering</button>
+            <th>Error Bound Steering</th>
+            <td><label>Slope Multiplier</label>
+              <input type="text" class="form-control" placeholder="1.5" [(ngModel)]="slopeMultiplier1" />
             </td>
-            <td>
-              <input type="text" class="form-control" placeholder="Error Limit" [(ngModel)]="errorLimit" />
-              <button class="btn btn-success mt-2" (click)="startAutoSteering()">Start Auto Steering</button>
-              <button class="btn btn-danger mt-2" (click)="stopAutoSteering()">Stop Auto Steering</button>
+            <td><label>Phase Time Constant</label>
+              <input type="text" class="form-control" placeholder="10" [(ngModel)]="phaseTimeConstant1" />
             </td>
+            <td><label>Error Limit</label>
+              <input type="text" class="form-control" placeholder="1" [(ngModel)]="errorLimit" />
+
+            </td>
+
+            <td><button class="btn btn-success mt-2" (click)="startAutoSteering()">Start</button></td>
+            <td>
+              <button class="btn btn-danger mt-2" (click)="stopAutoSteering()">Stop</button></td>
           </tr>
         </tbody>
       </table>
@@ -42,7 +56,8 @@
         <p><strong>Frequency Correction:</strong> {{ frequencyCorrection | json }}</p>
         <p><strong>Phase Correction:</strong> {{ phaseCorrection | json }}</p>
         <p><strong>TIC Reading:</strong> {{ currentTicValue | json }}</p>
-        <p><strong>Slop Interval</strong> {{ steering_Interval | json }}</p>
+        <p><strong>Steering Interval</strong> {{ steering_Interval | json }}</p>
+        <p><strong>Error Limit</strong> {{ error_Limit | json }}</p>
       </div>
     </div>
   </div>

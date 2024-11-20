@@ -30,12 +30,25 @@
             </tbody>
           </table>
         </div>
+
         <div class="value-box">
           <strong>TIC Value:</strong>
-          {{ ticValue && ticValue.value ? formatToNanoseconds(ticValue.value) : 'Waiting for data...' }} ns
+          {{ ticValue && ticValue.value ? formatToNanoseconds(ticValue.value) : 'Waiting ns....' }} ns
         </div>
-
       </div>
+      <button (click)="applyPD()">
+        <div class="value-box">
+          <strong>PD Value:</strong>
+          {{ PDValue || 'No response yet.' }}
+        </div>
+      </button>
+      <div>
+        <!-- <button (click)="applyPD()">Apply PD</button>
+        <div class="response-box">
+          <strong>PD Value:</strong> {{ PDValue || 'No response yet.' }}
+        </div> -->
+      </div>
+
 
     </div>
   </div>

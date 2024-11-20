@@ -41,14 +41,20 @@ export class RubidiumSteeringComponent implements OnInit, AfterViewInit {
       y1: {
         title: {
           display: true,
-          text: 'TIC Reading',
+          text: 'Average TIC Value',
         },
         position: 'right',
         grid: {
           drawOnChartArea: false,
         },
         ticks: {
-          callback: (value: number | string) => `${value}`,
+          // Format ticks in exponential notation
+          callback: (value: number | string) => {
+            if (typeof value === 'number') {
+              return value.toExponential(2); // Converts the number to exponential format with 2 decimal places
+            }
+            return value;
+          },
         },
       },
     },
@@ -110,7 +116,7 @@ export class RubidiumSteeringComponent implements OnInit, AfterViewInit {
     // Listen for phase correction data
     this.socket.on('phase_corr', (data: any) => {
       this.phaseCorrection = data.value;
-      this.updateDashboard(data.timestamp);
+      // this.updateDashboard(data.timestamp);
     });
 
     // Listen for TIC reading data
@@ -119,7 +125,7 @@ export class RubidiumSteeringComponent implements OnInit, AfterViewInit {
       this.ticReading =
         ticValues.reduce((sum: number, val: number) => sum + val, 0) /
         ticValues.length; // Calculate average
-      this.updateDashboard(data.timestamp);
+      //  this.updateDashboard(data.timestamp);
     });
 
     // Listen for slop interval

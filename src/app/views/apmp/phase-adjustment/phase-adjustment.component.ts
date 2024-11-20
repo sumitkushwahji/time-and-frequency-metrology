@@ -16,7 +16,9 @@ import { NplModule } from 'src/app/npl.module';
 })
 export class PhaseAdjustmentComponent implements OnInit {
   ticValue: any;
+  PDValue: any;
   phaseValue: string = ''; // Holds the input value from the UI
+  isLoading: boolean = false;
   constructor(private ticDataService: TicDataService, private socket: Socket) {}
 
   ngOnInit(): void {
@@ -60,5 +62,23 @@ export class PhaseAdjustmentComponent implements OnInit {
     } else {
       alert('Please enter a valid number.'); // Handle invalid input
     }
+  }
+  applyPD() {
+    this.isLoading = true; // Set loading state
+    this.socket.emit('applyPD'); // Emit to the backend
+
+    this.socket.once(
+      'pdResponse',
+      (response: { status: string; data?: string; message?: string }) => {
+        this.isLoading = false; // Reset loading state
+        if (response.status === 'success') {
+          this.PDValue = response.data; // Update the UI with the received data
+        } else {
+          this.PDValue = `Error: ${
+            response.message || 'Unknown error occurred'
+          }`;
+        }
+      }
+    );
   }
 }

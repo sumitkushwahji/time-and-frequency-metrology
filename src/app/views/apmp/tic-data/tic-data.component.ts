@@ -71,7 +71,7 @@ export class TicDataComponent implements OnInit, AfterViewInit {
   }
 
   updateDashboard(data: any) {
-    const maxDataPoints = 100;
+    const maxDataPoints = 50;
 
     // Format the timestamp as HH:MM:SS
     const formattedTime = this.formatTimestamp(data.timestamp);
